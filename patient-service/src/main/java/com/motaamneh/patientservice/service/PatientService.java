@@ -1,6 +1,7 @@
 package com.motaamneh.patientservice.service;
 
 
+import com.motaamneh.patientservice.dto.PatientRequestDTO;
 import com.motaamneh.patientservice.dto.PatientResponseDTO;
 import com.motaamneh.patientservice.mapper.PatientMapper;
 import com.motaamneh.patientservice.model.Patient;
@@ -26,5 +27,14 @@ public class PatientService {
                 ).toList();
         return patientResponseDTOs;
     }
+    public PatientResponseDTO createPatient(PatientRequestDTO patientRequestDTO) {
+        Patient newPatient = patientRepository.save(
+                PatientMapper.toModel(patientRequestDTO)
+        );
+        return PatientMapper.toDTO(newPatient);
+
+    }
+
+
 
 }
