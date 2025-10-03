@@ -8,11 +8,9 @@ import com.motaamneh.patientservice.exception.PatientNotFoundException;
 import com.motaamneh.patientservice.mapper.PatientMapper;
 import com.motaamneh.patientservice.model.Patient;
 import com.motaamneh.patientservice.repository.PatientRepository;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
@@ -47,7 +45,7 @@ public class PatientService {
         Patient patient = patientRepository.findById(id).orElseThrow(
                 ()-> new PatientNotFoundException("Patient not found with ID: "+id)
         );
-        if (patientRepository.existsByEmail(patientRequestDTO.getEmail())) {
+        if (patientRepository.existsByEmailAndIdNot(patientRequestDTO.getEmail(),id)) {
             throw new EmailAlreadyExistsException("A patient with the email "
                     + "already exists "+patientRequestDTO.getEmail());
         }
